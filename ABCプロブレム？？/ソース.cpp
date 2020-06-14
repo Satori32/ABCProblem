@@ -39,17 +39,16 @@ std::uintmax_t Radical(std::uintmax_t N) {
 
 bool CrashABCProblem(double Epsilon) {//not debug complete
 
-	for (std::uintmax_t A = 1; A <= std::numeric_limits<std::uintmax_t>::max(); A++) {
-		for (std::uintmax_t B = 1; B < A / 2; B++) {
-			std::uintmax_t AD = A - B;
-			std::uintmax_t C = AD + B;
-			if (std::gcd(AD, B) != 1) { continue; }
-			if (std::gcd(AD, C) != 1) { continue; }
+	for (std::uintmax_t C = 1; C <= std::numeric_limits<std::uintmax_t>::max(); C++) {
+		for (std::uintmax_t B = 1; B < C / 2; B++) {
+			std::uintmax_t A = C - B;
+			if (std::gcd(A, B) != 1) { continue; }
+			if (std::gcd(A, C) != 1) { continue; }
 			if (std::gcd(B, C) != 1) { continue; }
-			auto R = Radical(AD * B * C);
+			auto R = Radical(A * B * C);
 			double X = std::pow(R, 1 + Epsilon);
 			if (X < C) {
-				std::cout << "A:" << AD << ",B:" << B << ",C:" << C << ",Rad:" << R << std::endl;
+				std::cout << "A:" << A << ",B:" << B << ",C:" << C << ",Rad:" << R << std::endl;
 			}
 		}
 	}
