@@ -41,13 +41,13 @@ bool CrashABCProblem(double Epsilon) {//not debug complete
 
 	for (std::uintmax_t A = 1; A <= std::numeric_limits<std::uintmax_t>::max(); A++) {
 		for (std::uintmax_t B = 1; B < A/2; B++) {
-			if (std::gcd(A - B, B) != 1) { continue; }
-			std::uintmax_t C = (A - B) + B;
-			auto R = Radical((A - B) * B * C);
+			std::uintmax_t AD = A - B;
+			if (std::gcd(AD, B) != 1) { continue; }
+			std::uintmax_t C = AD + B;
+			auto R = Radical(AD * B * C);
 			double X = std::pow(R, 1 + Epsilon);
 			if (X < C) {
-				std::cout << "A:" << A << ",B:" << B << ",C:" << C << ",Rad:" << R << std::endl;
-				break;
+				std::cout << "A:" << AD << ",B:" << B << ",C:" << C << ",Rad:" << R << std::endl;
 			}
 		}
 	}
