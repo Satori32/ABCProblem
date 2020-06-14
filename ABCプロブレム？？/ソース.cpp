@@ -40,10 +40,12 @@ std::uintmax_t Radical(std::uintmax_t N) {
 bool CrashABCProblem(double Epsilon) {//not debug complete
 
 	for (std::uintmax_t A = 1; A <= std::numeric_limits<std::uintmax_t>::max(); A++) {
-		for (std::uintmax_t B = 1; B < A/2; B++) {
+		for (std::uintmax_t B = 1; B < A / 2; B++) {
 			std::uintmax_t AD = A - B;
-			if (std::gcd(AD, B) != 1) { continue; }
 			std::uintmax_t C = AD + B;
+			if (std::gcd(AD, B) != 1) { continue; }
+			if (std::gcd(AD, C) != 1) { continue; }
+			if (std::gcd(B, C) != 1) { continue; }
 			auto R = Radical(AD * B * C);
 			double X = std::pow(R, 1 + Epsilon);
 			if (X < C) {
