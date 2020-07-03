@@ -55,6 +55,30 @@ bool CrashABCProblem(double Epsilon) {//not debug complete
 	return true;
 }
 
+bool ABCCheck(std::uintmax_t A, std::uintmax_t B, double Ep) {//not debug complete.
+	std::uintmax_t C = A + B;
+
+	if (std::gcd(A, B) != 1) { return false; }
+	if (std::gcd(A, C) != 1) { return false; }
+	if (std::gcd(B, C) != 1) { return false; }
+	std::uintmax_t N = A * B * C;
+	auto R = Radical(N);
+	double X = std::pow(R, 1 + Ep);
+
+	return C>X;
+}
+int main() {
+	bool A = ABCCheck(1, 1, -2);
+	std::cout << A << std::endl;
+	A = ABCCheck(1, 1, 1);
+	std::cout << A << std::endl;
+	A = ABCCheck(1, 1, 0);
+	std::cout << A << std::endl;
+	A = ABCCheck(2, 2, 0);
+	std::cout << A << std::endl;
+	return 0;
+}
+/** /
 int main() {
 	std::uintmax_t N = 2 * 2 * 3 * 3 * 5 * 7;
 	auto R = PrimeFacterlizer(N);
@@ -69,3 +93,4 @@ int main() {
 	CrashABCProblem(0);
 	return 0;
 }
+/**/
