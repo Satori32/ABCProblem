@@ -6,6 +6,7 @@
 #include <numeric>
 
 //typedef std::vector<std::uintmax_t> DType;
+//https://ja.wikipedia.org/wiki/ABC%E4%BA%88%E6%83%B3
 
 template<class UInt>
 std::vector<UInt> PrimeFacterlizer(UInt N) {
@@ -23,7 +24,7 @@ std::vector<UInt> PrimeFacterlizer(UInt N) {
 }
 
 template<class UInt>
-std::uintmax_t Radical(UInt N) {
+UInt Radical(UInt N) {
 	auto R = PrimeFacterlizer(N);
 
 	std::sort(R.begin(), R.end());
@@ -69,6 +70,11 @@ bool ABCCheck(const UInt A, UInt B, Float Ep) {//not debug complete.
 
 	return C>X;
 }
+template<class Float,class UInt>
+Float Quality(const UInt& A, const UInt& B) {//need custmizetion point. and not debug complete.
+	UInt C = A + B;
+	return std::log(C) / std::log(Radical(A* B* C));
+}
 int main() {
 
 	std::uintmax_t N = 2 * 3 * 4 * 4 * 2 * 5 * 7;
@@ -83,6 +89,14 @@ int main() {
 	std::cout << A << std::endl;
 	A = ABCCheck<double>(2, 2, 0);
 	std::cout << A << std::endl;
+
+	int C = 0;
+	for (std::uintmax_t i = 0; i < 100; i++) {
+		if (Quality<double>(i, 100 - i) > 1.0) {
+			C++;
+		}
+	}
+	std::cout << C << std::endl;
 	return 0;
 }
 /** /
