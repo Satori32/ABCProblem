@@ -5,12 +5,13 @@
 #include <limits>
 #include <numeric>
 
-typedef std::vector<std::uintmax_t> DType;
+//typedef std::vector<std::uintmax_t> DType;
 
-DType PrimeFacterlizer(std::uintmax_t N) {
+template<class UInt>
+std::vector<UInt> PrimeFacterlizer(UInt N) {
 
-	DType R;
-	for (std::uintmax_t i = 2; i <= N; i++) {
+	std::vector<UInt> R;
+	for (UInt i = 2; i <= N; i++) {
 		if (N % i == 0) {
 			R.push_back(i);
 			N /= i;
@@ -21,14 +22,15 @@ DType PrimeFacterlizer(std::uintmax_t N) {
 	return R;
 }
 
-std::uintmax_t Radical(std::uintmax_t N) {
+template<class UInt>
+std::uintmax_t Radical(UInt N) {
 	auto R = PrimeFacterlizer(N);
 
 	std::sort(R.begin(), R.end());
 
 	R.erase(std::unique(R.begin(), R.end()), R.end());
 
-	std::uintmax_t V = 1;
+	UInt V = 1;
 	for (auto& o : R) {
 		V *= o;
 	}
@@ -54,27 +56,32 @@ bool CrashABCProblem(double Epsilon) {//not debug complete
 	}
 	return true;
 }
-
-bool ABCCheck(std::uintmax_t A, std::uintmax_t B, double Ep) {//not debug complete.
-	std::uintmax_t C = A + B;
+template<class Float,class UInt>
+bool ABCCheck(const UInt A, UInt B, Float Ep) {//not debug complete.
+	UInt C = A + B;
 
 	if (std::gcd(A, B) != 1) { return false; }
 	if (std::gcd(A, C) != 1) { return false; }
 	if (std::gcd(B, C) != 1) { return false; }
-	std::uintmax_t N = A * B * C;
+	UInt N = A * B * C;
 	auto R = Radical(N);
-	double X = std::pow(R, 1 + Ep);
+	Float X = std::pow(R, 1 + Ep);
 
 	return C>X;
 }
 int main() {
-	bool A = ABCCheck(1, 1, -2);
+
+	std::uintmax_t N = 2 * 3 * 4 * 4 * 2 * 5 * 7;
+	auto R = PrimeFacterlizer(N);
+	auto V = Radical(N);
+
+	bool A = ABCCheck<double>(1, 1, -2);
 	std::cout << A << std::endl;
-	A = ABCCheck(1, 1, 1);
+	A = ABCCheck<double>(1, 1, 1);
 	std::cout << A << std::endl;
-	A = ABCCheck(1, 1, 0);
+	A = ABCCheck<double>(1, 1, 0);
 	std::cout << A << std::endl;
-	A = ABCCheck(2, 2, 0);
+	A = ABCCheck<double>(2, 2, 0);
 	std::cout << A << std::endl;
 	return 0;
 }
