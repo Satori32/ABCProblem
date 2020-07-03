@@ -65,7 +65,7 @@ bool ABCCheck(const UInt A, UInt B, Float Ep) {//not debug complete.
 	if (std::gcd(B, C) != 1) { return false; }
 	UInt N = A * B * C;
 	auto R = Radical(N);
-	Float X = std::pow(R, 1 + Ep);
+	Float X = std::pow(R, 1 + Ep);//i cant solve. need custamizetion point.
 
 	return C>X;
 }
